@@ -20,9 +20,9 @@ directionalLight.position.set(1, 1, 2).normalize();
 scene.add(directionalLight);
 
 //------load 模型進來，先設定好路徑------
-const loader = new GLTFLoader().setPath('src/assets/3Dmodel/');
+const loader = new GLTFLoader();
 let desk;
-loader.load('desk.gltf', function (gltf) {
+loader.load('3Dmodel/desk.gltf', function (gltf) {
   desk = gltf.scene;
   desk.position.x = 1;
   scene.add(desk);
@@ -36,7 +36,7 @@ const angle = ref(0);
 const animate = () => {
   requestAnimationFrame(animate);
 
-  angle.value += 0.02;
+  angle.value += 0.05;
   const offsetY = Math.sin(angle.value) * 0.01;
   desk.position.y = offsetY;
 
