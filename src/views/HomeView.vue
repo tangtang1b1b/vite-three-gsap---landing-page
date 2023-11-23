@@ -1,12 +1,15 @@
 <script setup>
+import { ref } from 'vue';
 import ModelDesk from '../components/ModelDesk.vue';
+const bannerRef = ref(null);
+const productRef = ref(null);
 </script>
 
 <template>
-  <ModelDesk/>
+  <ModelDesk :bannerRef="bannerRef" :productRef="productRef" />
   <div class="container">
-    <div class="banner"></div>
-    <div class="products"></div>
+    <div class="banner" ref="bannerRef"></div>
+    <div class="products" ref="productRef"></div>
   </div>
 </template>
 
@@ -25,7 +28,8 @@ import ModelDesk from '../components/ModelDesk.vue';
     height: 100vh;
     background-color: #ddd;
   }
-  .products{
+
+  .products {
     width: 100%;
     height: 100vh;
   }
