@@ -100,14 +100,13 @@ onMounted(() => {
         
         gsap.to(desk.position, {
           scrollTrigger: {
-            trigger: boxRef.value,
+            trigger: bannerRef.value,
             start: 'top',
-            end: `+=${boxRef.value.offsetHeight}`,
+            end: `+=${bannerRef.value.offsetHeight}`,
             markers: true,
             scrub: 1.5,
           },
           x: -1,
-          y:-1,
           ease: 'none',
         });
       }, threeBox.value);
@@ -119,7 +118,6 @@ onMounted(() => {
 
 <template>
   <div id="threeBox" ref="threeBox"></div>
-  <div class="box" ref="boxRef"></div>
 </template>
 
 <style lang="scss" scoped>

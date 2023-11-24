@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import ModelDesk from '../components/ModelDesk.vue';
+import Navbar from '../components/Navbar.vue';
 const bannerRef = ref(null);
 const productRef = ref(null);
 </script>
 
 <template>
+  <Navbar/>
   <ModelDesk :bannerRef="bannerRef" :productRef="productRef" />
   <div class="container">
     <div class="banner" ref="bannerRef"></div>
@@ -16,7 +18,7 @@ const productRef = ref(null);
 <style lang="scss" scoped>
 .container {
   width: 100%;
-  background-color: #ccc;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,7 +28,7 @@ const productRef = ref(null);
     text-align: center;
     width: 100%;
     height: 100vh;
-    background-color: #ddd;
+    background-color: #fbfbfb;
   }
 
   .products {
