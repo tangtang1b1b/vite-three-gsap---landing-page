@@ -18,8 +18,11 @@
 
 <style lang="scss" scoped>
 .navContainer {
+  position: fixed;
   width: 100%;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #fbfbfb;
 
   .logoWrap {
@@ -33,12 +36,11 @@
 
   .tagWrap {
     width: 50%;
-
     .tagLists {
       display: flex;
       width: 100%;
       height: 100%;
-      justify-content: space-between;
+      justify-content: space-evenly;
       align-items: center;
       list-style: none;
       padding: 0;
@@ -46,7 +48,7 @@
 
       .tagList {
         cursor: pointer;
-        padding: 20px 40px;
+        padding: 20px 20px;
         p{
           position: relative;
           font-size: 18px;
