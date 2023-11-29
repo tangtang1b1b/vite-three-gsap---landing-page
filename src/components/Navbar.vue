@@ -23,7 +23,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fbfbfb;
+  // background-color: #fbfbfb;
+  background-color: transparent;
+  z-index: 99;
 
   .logoWrap {
     cursor: pointer;

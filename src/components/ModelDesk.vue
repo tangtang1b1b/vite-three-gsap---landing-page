@@ -5,17 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-import { defineProps, onMounted, ref, watchEffect, toRefs, watch } from 'vue';
-
-const props = defineProps({
-  bannerRef: Object,
-  productRef: Object,
-});
+import { defineProps, onMounted, onUnmounted, ref, watchEffect, toRefs, watch } from 'vue';
 
 const threeBox = ref(null);
 const isReady = ref(false);
-const boxRef = ref(null);
-const { bannerRef, productRef } = toRefs(props);
+const isRotate = ref(false);
+const scrollY = ref(null);
 
 let ctx;
 
@@ -62,9 +57,26 @@ const animate = () => {
 const mouseMove = (mesh, currentRotation = { x: 0, y: 0 }) => {
   const rotateX = window.innerWidth / 2;
   const rotateY = window.innerHeight / 2;
-  window.addEventListener('mousemove', (e) => {
+  const handleMouseMove = (e) => {
     mesh.rotation.x = currentRotation.x + ((e.clientY - rotateY) * 0.0003);
     mesh.rotation.y = currentRotation.y + ((e.clientX - rotateX) * 0.0003);
+  };
+  window.addEventListener('mousemove', handleMouseMove);
+  watch(scrollY, (newValue) => {
+    if (newValue > 0) {
+      if (mesh.rotation.x !== 0 && mesh.rotation.y !== 0 && isRotate.value !== true) {
+        mesh.rotation.x = 0;
+        mesh.rotation.y = 0;
+        isRotate.value = true;
+      }
+      window.removeEventListener('mousemove', handleMouseMove);
+    } else {
+      setTimeout(() => {
+        if (newValue > 0) return
+        isRotate.value = false;
+        window.addEventListener('mousemove', handleMouseMove);
+      }, 33);
+    }
   });
 }
 
@@ -78,14 +90,16 @@ const onResize = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-onMounted(() => {
+const three = onMounted(() => {
+  const angle = Math.PI / 180;
   threeBox.value.appendChild(renderer.domElement);
   renderer.setSize(window.innerWidth, window.innerHeight);
   window.addEventListener('resize', onResize, false);
   watchEffect(() => {
     if (isReady.value) {
+      const tl = gsap.timeline();
       ctx = gsap.context(() => {
-        gsap.set(desk.position, {x: 1, y: 0, z: 0});
+        gsap.set(desk.position, { x: 1, y: 0, z: 0 });
         gsap.fromTo('canvas',
           {
             xPercent: 100,
@@ -97,23 +111,90 @@ onMounted(() => {
           opacity: 1,
           ease: 'power1.inOut'
         });
-        
+
         gsap.to(desk.position, {
+          x: 0,
           scrollTrigger: {
-            trigger: bannerRef.value,
+            trigger: threeBox.value,
             start: 'top',
-            end: `+=${bannerRef.value.offsetHeight}`,
+            end: `+=200`,
             markers: true,
-            scrub: 1.5,
+            scrub: 1.3,
           },
-          x: -1,
-          ease: 'none',
         });
+        gsap.to(desk.scale, {
+          x: 1.5,
+          y: 1.5,
+          z: 1.5,
+          scrollTrigger: {
+            trigger: threeBox.value,
+            start: 'top',
+            end: `+=200`,
+            markers: true,
+            scrub: 1.3,
+          },
+        });
+        gsap.to(desk.rotation, {
+          x: angle * 30,
+          y: angle * 70,
+          scrollTrigger: {
+            trigger: threeBox.value,
+            start: 'top',
+            end: `+=200`,
+            markers: true,
+            scrub: 1.3,
+          },
+        });
+
+        // gsap.to(desk.position, {
+        //   x: -1,
+        //   scrollTrigger: {
+        //     trigger: threeBox.value,
+        //     start: `+=200`,
+        //     end: `+=600`,
+        //     markers: true,
+        //     scrub: 1.3,
+        //   },
+        // });
+        // gsap.to(desk.scale, {
+        //   x: 1,
+        //   y: 1,
+        //   z: 1,
+        //   scrollTrigger: {
+        //     trigger: threeBox.value,
+        //     start: `+=200`,
+        //     end: `+=600`,
+        //     markers: true,
+        //     scrub: 1.3,
+        //   },
+        // });
+        // gsap.to(desk.rotation, {
+        //   x: angle * 90,
+        //   y: angle * 360,
+        //   scrollTrigger: {
+        //     trigger: threeBox.value,
+        //     start: `+=200`,
+        //     end: `+=600`,
+        //     markers: true,
+        //     scrub: 1.3,
+        //   },
+        // });
       }, threeBox.value);
     }
   })
 });
 
+const scrollCheck = onMounted(() => {
+  const handleScroll = () => {
+    scrollY.value = window.scrollY;
+  }
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  ctx.revert();
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template>
@@ -127,6 +208,7 @@ onMounted(() => {
   position: fixed;
   top: 0;
   pointer-events: none;
+  background-color: #fbfbfb;
 }
 
 .box {
