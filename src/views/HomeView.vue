@@ -1,16 +1,26 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import ModelDesk from '../components/ModelDesk.vue';
 import BannerContainer from '../components/BannerContainer.vue';
+import ProductContainer from '../components/ProductContainer.vue';
 import Navbar from '../components/Navbar.vue';
 
+const productContainerRef = ref(null);
+const handleSendProductRef = (ref) => {
+  productContainerRef.value = ref;
+};
+
+onMounted(() => {
+
+})
 </script>
 
 <template>
   <Navbar />
-  <ModelDesk />
+  <ModelDesk :productRef="productContainerRef"/>
   <div class="container">
     <BannerContainer />
-    <div class="products" ref="productRef"></div>
+    <ProductContainer @sendProductRef="handleSendProductRef" />
   </div>
 </template>
 
@@ -24,11 +34,5 @@ import Navbar from '../components/Navbar.vue';
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  .products {
-    width: 100%;
-    height: 100vh;
-    background-color: #fbfbfb;
-  }
 }
 </style>

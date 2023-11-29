@@ -7,6 +7,10 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 import { defineProps, onMounted, onUnmounted, ref, watchEffect, toRefs, watch } from 'vue';
 
+const props = defineProps({
+  productRef: Object,
+})
+
 const threeBox = ref(null);
 const isReady = ref(false);
 const isRotate = ref(false);
@@ -92,94 +96,82 @@ const onResize = () => {
 
 const three = onMounted(() => {
   const angle = Math.PI / 180;
+  let delay = 0;
+  let setDuration = 1;
   threeBox.value.appendChild(renderer.domElement);
   renderer.setSize(window.innerWidth, window.innerHeight);
   window.addEventListener('resize', onResize, false);
   watchEffect(() => {
     if (isReady.value) {
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: threeBox.value,
+          start: 'top',
+          end: `+=${threeBox.value.offsetHeight}`,
+          // markers: true,
+          scrub: 1.3,
+        },
+      });
       ctx = gsap.context(() => {
         gsap.set(desk.position, { x: 1, y: 0, z: 0 });
         gsap.fromTo('canvas',
-          {
-            xPercent: 100,
-            opacity: 0,
-            ease: 'power1.inOut'
-          }, {
+        {
+          xPercent: 100,
+          opacity: 0,
+          ease: 'power1.inOut'
+        }, {
           duration: 1,
           xPercent: 0,
           opacity: 1,
           ease: 'power1.inOut'
         });
 
-        gsap.to(desk.position, {
+        tl.to(desk.position, {
           x: 0,
-          scrollTrigger: {
-            trigger: threeBox.value,
-            start: 'top',
-            end: `+=200`,
-            markers: true,
-            scrub: 1.3,
-          },
-        });
-        gsap.to(desk.scale, {
+          duration: setDuration,
+        }, delay);
+        tl.to(desk.scale, {
           x: 1.5,
           y: 1.5,
           z: 1.5,
-          scrollTrigger: {
-            trigger: threeBox.value,
-            start: 'top',
-            end: `+=200`,
-            markers: true,
-            scrub: 1.3,
-          },
-        });
-        gsap.to(desk.rotation, {
+          duration: setDuration,
+        }, delay)
+        tl.to(desk.rotation, {
           x: angle * 30,
           y: angle * 70,
-          scrollTrigger: {
-            trigger: threeBox.value,
-            start: 'top',
-            end: `+=200`,
-            markers: true,
-            scrub: 1.3,
-          },
-        });
+          duration: setDuration,
+        }, delay);
 
-        // gsap.to(desk.position, {
-        //   x: -1,
-        //   scrollTrigger: {
-        //     trigger: threeBox.value,
-        //     start: `+=200`,
-        //     end: `+=600`,
-        //     markers: true,
-        //     scrub: 1.3,
-        //   },
-        // });
-        // gsap.to(desk.scale, {
-        //   x: 1,
-        //   y: 1,
-        //   z: 1,
-        //   scrollTrigger: {
-        //     trigger: threeBox.value,
-        //     start: `+=200`,
-        //     end: `+=600`,
-        //     markers: true,
-        //     scrub: 1.3,
-        //   },
-        // });
-        // gsap.to(desk.rotation, {
-        //   x: angle * 90,
-        //   y: angle * 360,
-        //   scrollTrigger: {
-        //     trigger: threeBox.value,
-        //     start: `+=200`,
-        //     end: `+=600`,
-        //     markers: true,
-        //     scrub: 1.3,
-        //   },
-        // });
-      }, threeBox.value);
+        delay += setDuration;
+
+        tl.to(desk.position, {
+          x: -1,
+          duration: setDuration,
+        }, delay);
+        tl.to(desk.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: setDuration,
+        }, delay)
+        tl.to(desk.rotation, {
+          x: angle * 3,
+          y: angle * 230,
+          duration: setDuration,
+        }, delay);
+
+        gsap.to(props.productRef.value,
+        {
+
+          scrollTrigger: {
+          trigger: props.productRef.value,
+          start: 'top',
+          end: `bottom`,
+          markers: true,
+          scrub: 1.3,
+        },
+        })
+      });
     }
   })
 });
