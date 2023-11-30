@@ -27,12 +27,12 @@ onMounted(() => {
 <style lang="scss" scoped>
 .container {
   width: 100%;
-  max-width: 1440px;
   margin: auto;
-  background-color: #fff;
+  background-color: #fbfbfb;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 </style>

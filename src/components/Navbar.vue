@@ -23,8 +23,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // background-color: #fbfbfb;
-  background-color: transparent;
+  background-color: #fbfbfb;
+  // background-color: transparent;
   z-index: 99;
 
   .logoWrap {
@@ -72,11 +72,11 @@
         &:hover p::after {
           width: 100%;
           left: 0%;
-          background-color: #ccc;
+          background-color: rgba(173, 202, 136, 0.7);
         }
 
         &:hover {
-          color: #a7a7a7;
+          color: #a1c276;
         }
 
       }

@@ -34,7 +34,7 @@ onMounted(() => {
   <div class="banner">
     <div class="sloganWrap">
       <div class="wrapBox">
-        <p>Lift Desks<br>Elevate Your Work and Health !</p>
+        <p>Lift Desks<br>Elevate Your <span>Work</span> and <span>Health</span> !</p>
       </div>
       <div class="wrapBox">
         <p>Elevating work efficiency and fostering a more vibrant office environment <br>have facilitated team
@@ -48,6 +48,7 @@ onMounted(() => {
 .banner {
   text-align: center;
   width: 100%;
+  max-width: 1440px;
   height: 100vh;
   background-color: #fbfbfb;
 
@@ -63,6 +64,12 @@ onMounted(() => {
     .wrapBox {
       width: fit-content;
       overflow: hidden;
+      p{
+        span{
+          color: #a1c276;
+          font-weight: bold;
+        }
+      }
     }
 
     .wrapBox:nth-child(1) {

@@ -109,17 +109,17 @@ const three = onMounted(() => {
           start: 'top',
           end: `+=${threeBox.value.offsetHeight}`,
           // markers: true,
-          scrub: 1.3,
+          scrub: 1.5,
         },
       });
       ctx = gsap.context(() => {
         gsap.set(desk.position, { x: 1, y: 0, z: 0 });
         gsap.fromTo('canvas',
-        {
-          xPercent: 100,
-          opacity: 0,
-          ease: 'power1.inOut'
-        }, {
+          {
+            xPercent: 100,
+            opacity: 0,
+            ease: 'power1.inOut'
+          }, {
           duration: 1,
           xPercent: 0,
           opacity: 1,
@@ -156,21 +156,22 @@ const three = onMounted(() => {
         }, delay)
         tl.to(desk.rotation, {
           x: angle * 3,
-          y: angle * 230,
+          y: angle * 240,
           duration: setDuration,
         }, delay);
 
         gsap.to(props.productRef.value,
-        {
-
-          scrollTrigger: {
-          trigger: props.productRef.value,
-          start: 'top',
-          end: `bottom`,
-          markers: true,
-          scrub: 1.3,
-        },
-        })
+          {
+            x: 0,
+            opacity: 1,
+            scrollTrigger: {
+              trigger: props.productRef.value,
+              start: 'top 30%',
+              end: `top top`,
+              markers: true,
+              scrub: 1.5,
+            },
+          })
       });
     }
   })
@@ -199,8 +200,9 @@ onUnmounted(() => {
   height: 100%;
   position: fixed;
   top: 0;
+  z-index: 55;
   pointer-events: none;
-  background-color: #fbfbfb;
+  // background-color: #fbfbfb;
 }
 
 .box {
