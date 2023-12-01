@@ -61,7 +61,7 @@
             content: '';
             width: 0%;
             height: 1.5px;
-            background-color: #333;
+            background-color: rgba(173, 202, 136, 0.7);
             position: absolute;
             left: 50%;
             bottom: 10%;
@@ -72,7 +72,6 @@
         &:hover p::after {
           width: 100%;
           left: 0%;
-          background-color: rgba(173, 202, 136, 0.7);
         }
 
         &:hover {

@@ -19,8 +19,8 @@ onMounted(() => {
         opacity: '0',
         scrollTrigger: {
           trigger: wrapBox,
-          start: 'top center',
-          end: `+=100`,
+          start: 'top 40%',
+          end: `top 40%`,
           scrub: 1.3,
           ease: 'none',
         },

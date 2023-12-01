@@ -138,7 +138,7 @@ const three = onMounted(() => {
         }, delay)
         tl.to(desk.rotation, {
           x: angle * 30,
-          y: angle * 70,
+          y: angle * 140,
           duration: setDuration,
         }, delay);
 
@@ -162,16 +162,17 @@ const three = onMounted(() => {
 
         gsap.to(props.productRef.value,
           {
-            x: 0,
+            // x: 0,
             opacity: 1,
             scrollTrigger: {
               trigger: props.productRef.value,
               start: 'top 30%',
               end: `top top`,
-              markers: true,
+              // markers: true,
               scrub: 1.5,
             },
-          })
+          }
+        )
       });
     }
   })

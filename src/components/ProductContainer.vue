@@ -28,7 +28,7 @@ onMounted(() => {
   height: 100vh;
   background-color: #fbfbfb;
   opacity: 0;
-  transform: translateX(-200px);
+  // transform: translateY(200px);
   .imgWrap{
     filter: drop-shadow(-15px 10px 0px rgba(173, 202, 136, 0.7));
     display: flex;
