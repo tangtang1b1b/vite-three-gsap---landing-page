@@ -5,10 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-import { defineProps, onMounted, onUnmounted, ref, watchEffect, toRefs, watch } from 'vue';
+import { defineProps, onMounted, onUnmounted, ref, watchEffect, watch } from 'vue';
 
 const props = defineProps({
   productRef: Object,
+  collectionRef: Object,
+  pinSpaceRef: Object,
 })
 
 const threeBox = ref(null);
@@ -97,6 +99,7 @@ const onResize = () => {
 const three = onMounted(() => {
   const angle = Math.PI / 180;
   let delay = 0;
+  let delay2 = 0;
   let setDuration = 1;
   threeBox.value.appendChild(renderer.domElement);
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -112,8 +115,18 @@ const three = onMounted(() => {
           scrub: 1.5,
         },
       });
+      const t2 = gsap.timeline({
+        scrollTrigger: {
+          trigger: props.pinSpaceRef,
+          start: 'top center',
+          end: `center center`,
+          // markers: true,
+          scrub: 1.5,
+        },
+      });
       ctx = gsap.context(() => {
         gsap.set(desk.position, { x: 1, y: 0, z: 0 });
+        gsap.set(props.productRef.value, { opacity: 0 });
         gsap.fromTo('canvas',
           {
             xPercent: 100,
@@ -160,19 +173,38 @@ const three = onMounted(() => {
           duration: setDuration,
         }, delay);
 
+        delay += setDuration;
+
         gsap.to(props.productRef.value,
           {
-            // x: 0,
             opacity: 1,
+            duration: setDuration,
             scrollTrigger: {
               trigger: props.productRef.value,
-              start: 'top 30%',
+              start: 'top 40%',
               end: `top top`,
               // markers: true,
               scrub: 1.5,
             },
           }
-        )
+        );
+
+        t2.to(desk.position, {
+          x: 1,
+          duration: setDuration,
+        }, delay2);
+        t2.to(desk.scale, {
+          x: 1.2,
+          y: 1.2,
+          z: 1.2,
+          duration: setDuration,
+        }, delay2)
+        t2.to(desk.rotation, {
+          x: angle * 0,
+          y: angle * -10,
+          duration: setDuration,
+        }, delay2);
+
       });
     }
   })

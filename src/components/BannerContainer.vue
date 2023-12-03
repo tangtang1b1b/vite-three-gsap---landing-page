@@ -19,10 +19,11 @@ onMounted(() => {
         opacity: '0',
         scrollTrigger: {
           trigger: wrapBox,
-          start: 'top 40%',
-          end: `top 40%`,
+          start: 'bottom center',
+          end: `top 20%`,
           scrub: 1.3,
           ease: 'none',
+          // markers: true,
         },
       });
     });
