@@ -100,13 +100,14 @@ const three = onMounted(() => {
   const angle = Math.PI / 180;
   let delay = 0;
   let delay2 = 0;
+  let delay3 = 0;
   let setDuration = 1;
   threeBox.value.appendChild(renderer.domElement);
   renderer.setSize(window.innerWidth, window.innerHeight);
   window.addEventListener('resize', onResize, false);
   watchEffect(() => {
     if (isReady.value) {
-      const tl = gsap.timeline({
+      const t1 = gsap.timeline({
         scrollTrigger: {
           trigger: threeBox.value,
           start: 'top',
@@ -120,6 +121,15 @@ const three = onMounted(() => {
           trigger: props.pinSpaceRef,
           start: 'top center',
           end: `center center`,
+          // markers: true,
+          scrub: 1.5,
+        },
+      });
+      const t3 = gsap.timeline({
+        scrollTrigger: {
+          trigger: props.collectionRef.value,
+          start: 'top bottom',
+          end: `top top`,
           // markers: true,
           scrub: 1.5,
         },
@@ -139,17 +149,17 @@ const three = onMounted(() => {
           ease: 'power1.inOut'
         });
 
-        tl.to(desk.position, {
+        t1.to(desk.position, {
           x: 0,
           duration: setDuration,
         }, delay);
-        tl.to(desk.scale, {
+        t1.to(desk.scale, {
           x: 1.5,
           y: 1.5,
           z: 1.5,
           duration: setDuration,
         }, delay)
-        tl.to(desk.rotation, {
+        t1.to(desk.rotation, {
           x: angle * 30,
           y: angle * 140,
           duration: setDuration,
@@ -157,17 +167,17 @@ const three = onMounted(() => {
 
         delay += setDuration;
 
-        tl.to(desk.position, {
+        t1.to(desk.position, {
           x: -1,
           duration: setDuration,
         }, delay);
-        tl.to(desk.scale, {
+        t1.to(desk.scale, {
           x: 1,
           y: 1,
           z: 1,
           duration: setDuration,
         }, delay)
-        tl.to(desk.rotation, {
+        t1.to(desk.rotation, {
           x: angle * 3,
           y: angle * 240,
           duration: setDuration,
@@ -205,6 +215,18 @@ const three = onMounted(() => {
           duration: setDuration,
         }, delay2);
 
+        t3.to('.container', {
+          backgroundColor: '#000',
+          duration: setDuration,
+        }, delay3);
+        t3.to(props.productRef.value, {
+          backgroundColor: '#000',
+          duration: setDuration,
+        }, delay3);
+        t3.to(threeBox.value, {
+          opacity: 0,
+          duration: setDuration,
+        }, delay3);
       });
     }
   })
