@@ -4,8 +4,17 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
+const images = ref([
+  'src/assets/images/1.jpg',
+  'src/assets/images/2.jpg',
+  'src/assets/images/3.jpg',
+  'src/assets/images/4.jpg',
+]);
+
 const collectionRef = ref(null);
+
 const emits = defineEmits();
+
 let ctx;
 
 onMounted(() => {
@@ -15,7 +24,7 @@ onMounted(() => {
       trigger: collectionRef.value,
       start: 'top top',
       end: `bottom bottom`,
-      markers: true,
+      // markers: true,
       scrub: 1.5,
       pin: true,
     },
@@ -56,7 +65,7 @@ onMounted(() => {
         transform: 'translate3d(-50%, -50%, 0) scale3d(0.5, 0.5, 1) rotateX(0) rotateY(0) rotateZ(-45deg)',
       },
       {
-        transform: 'translate3d(-50%, -50%, 0) scale3d(2.5, 2.5, 1) rotateX(0) rotateY(0) rotateZ(100deg)',
+        transform: 'translate3d(-50%, -50%, 0) scale3d(3, 3, 1) rotateX(0) rotateY(0) rotateZ(155deg)',
       }, 0
     )
   });
@@ -73,10 +82,7 @@ onMounted(() => {
       </p>
     </div>
     <div class="imgBox">
-      <div class="imgSet"><img src="../assets/images/desk2.jpg" alt=""></div>
-      <div class="imgSet"><img src="../assets/images/desk2.jpg" alt=""></div>
-      <div class="imgSet"><img src="../assets/images/desk2.jpg" alt=""></div>
-      <div class="imgSet"><img src="../assets/images/desk2.jpg" alt=""></div>
+      <div class="imgSet" v-for="image in images" :key="image"><img :src="image" alt="3dmodel"></div>
     </div>
   </div>
 </template>
@@ -86,7 +92,6 @@ onMounted(() => {
   position: relative;
   width: 100%;
   height: 250vh;
-  // background-color: #fbfbfb;
   background-color: transparent;
 
   .collectTextArea {
@@ -154,7 +159,7 @@ onMounted(() => {
       left: 0;
       right: 0;
       bottom: auto;
-      transform: translate3d(0, 0, 1000px) perspective(1000px) rotateX(-60deg) rotateY(0) rotateZ(90deg);
+      transform: translate3d(0, 0, 1000px) perspective(1000px) rotateX(-60deg) rotateY(0) rotateZ(-90deg);
     }
 
     .imgSet:nth-child(2) {
@@ -172,7 +177,7 @@ onMounted(() => {
       left: 0;
       right: 0;
       bottom: 0;
-      transform: translate3d(0, 0, 1000px) perspective(1000px) rotateX(60deg) rotateY(0) rotateZ(90deg);
+      transform: translate3d(0, 0, 1000px) perspective(1000px) rotateX(60deg) rotateY(0) rotateZ(-90deg);
     }
 
     .imgSet:nth-child(4) {

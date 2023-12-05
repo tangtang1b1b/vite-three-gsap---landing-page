@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-import { defineProps, onMounted, onUnmounted, ref, watchEffect, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watchEffect, watch } from 'vue';
 
 const props = defineProps({
   productRef: Object,
@@ -225,7 +225,7 @@ const three = onMounted(() => {
         }, delay3);
         t3.to(threeBox.value, {
           opacity: 0,
-          duration: setDuration,
+          duration: 0.5,
         }, delay3);
       });
     }

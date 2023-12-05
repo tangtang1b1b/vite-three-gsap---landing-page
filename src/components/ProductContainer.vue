@@ -75,12 +75,14 @@ onMounted(() => {
     overflow: hidden;
 
     p {
-      color: #fbfbfb;
+      color: #fff;
       font-size: 48px;
       font-weight: bold;
     }
   }
-
+  .title:nth-child(1) {
+    left: 50%;
+  }
   .title:nth-child(2) {
     position: absolute;
     width: 25%;
@@ -91,13 +93,13 @@ onMounted(() => {
     overflow: hidden;
 
     p {
-      color: #fbfbfb;
+      color: #fff;
       font-size: 16px;
     }
   }
 
   .imgWrap {
-    filter: blur(2px);
+    // filter: blur(1px);
     display: flex;
     justify-content: flex-end;
     width: 100%;

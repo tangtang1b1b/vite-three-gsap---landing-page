@@ -4,7 +4,9 @@ import ModelDesk from '../components/ModelDesk.vue';
 import BannerContainer from '../components/BannerContainer.vue';
 import ProductContainer from '../components/ProductContainer.vue';
 import CollectionContainer from '../components/CollectionContainer.vue';
+import ProcessContainer from '../components/ProcessContainer.vue';
 import Navbar from '../components/Navbar.vue';
+import footerArea from '../components/footerArea.vue';
 
 const productContainerRef = ref(null);
 const collectionContainerRef = ref(null);
@@ -31,7 +33,9 @@ onMounted(() => {
     <div class="pinSpace"></div>
     <div class="pinSpace" ref="pinSpaceRef"></div>
     <CollectionContainer @sendCollectionRef="handleSendCollectionRef" />
+    <ProcessContainer />
   </div>
+  <footerArea />
 </template>
 
 <style lang="scss" scoped>
@@ -44,7 +48,8 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  .pinSpace{
+
+  .pinSpace {
     width: 100%;
     height: 100vh;
     background-color: transparent;
