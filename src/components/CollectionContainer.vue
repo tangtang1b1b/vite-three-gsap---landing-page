@@ -5,10 +5,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const images = ref([
-  'src/assets/images/1.jpg',
-  'src/assets/images/2.jpg',
-  'src/assets/images/3.jpg',
-  'src/assets/images/4.jpg',
+  'photos/1.jpg',
+  'photos/2.jpg',
+  'photos/3.jpg',
+  'photos/4.jpg',
 ]);
 
 const collectionRef = ref(null);

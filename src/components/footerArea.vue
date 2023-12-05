@@ -27,8 +27,8 @@
     <div class="contectWrap">
       <ul>
         <li><p>0912858721</p></li>
-        <li><a href="">github</a></li>
-        <li><a href="">linkedin</a></li>
+        <li><a href="https://github.com/tangtang1b1b">github</a></li>
+        <li><a href="https://www.linkedin.com/in/tsai-chun-kao-734690242/">linkedin</a></li>
       </ul>
     </div>
   </footer>

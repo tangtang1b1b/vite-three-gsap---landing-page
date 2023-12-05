@@ -5,12 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const processImages = ref([
-  'src/assets/images/1-1.jpg',
-  'src/assets/images/1-2.jpg',
-  'src/assets/images/1-3.jpg',
-  'src/assets/images/1-4.jpg',
-  'src/assets/images/1-5.jpg',
-  'src/assets/images/1-6.jpg',
+  'photos/1-1.jpg',
+  'photos/1-2.jpg',
+  'photos/1-3.jpg',
+  'photos/1-4.jpg',
+  'photos/1-5.jpg',
+  'photos/1-6.jpg',
 ])
 const processRef = ref(null);
 const emits = defineEmits();
@@ -31,12 +31,6 @@ onMounted(() => {
     t1.to('.lists', {
       x: `-65%`,
     })
-    // t1.to(processRef.value, {
-    //   backgroundColor: '#fbfbfb',
-    // },'<')
-    // t1.to('.titleWrap p', {
-    //   color: '#000',
-    // },'<')
   });
 })
 </script>
