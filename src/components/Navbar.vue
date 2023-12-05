@@ -54,7 +54,7 @@ watch(navContainerRef, () => {
     font-weight: bold;
     span{
       font-weight: bold;
-      color: rgba(173, 202, 136, 1);;
+      color: rgba(173, 202, 136, 1);
     }
   }
 

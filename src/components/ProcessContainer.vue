@@ -1,5 +1,5 @@
 <script setup >
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -33,6 +33,10 @@ onMounted(() => {
     })
   });
 })
+
+onUnmounted(() => {
+  ctx.revert();
+});
 </script>
 
 <template>

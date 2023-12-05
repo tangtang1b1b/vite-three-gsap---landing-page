@@ -9,6 +9,7 @@
     "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.29",
     "gh-pages": "^6.1.0",
     "gsap": "^3.12.2",
     "pinia": "^2.1.7",
