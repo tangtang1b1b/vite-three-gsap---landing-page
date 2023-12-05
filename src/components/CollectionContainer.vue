@@ -36,7 +36,7 @@ onMounted(() => {
         transform: 'scale(70%)',
       },
       {
-        transform: 'scale(120%)',
+        transform: 'scale(200%)',
         opacity: 1,
       }, 0
     )
@@ -46,7 +46,7 @@ onMounted(() => {
         transform: 'scale(70%)',
       },
       {
-        transform: 'scale(120%)',
+        transform: 'scale(150%)',
         opacity: 1,
       }, 0
     )
@@ -100,8 +100,8 @@ onUnmounted(() => {
 
   .collectTextArea {
     position: absolute;
-    width: 25vw;
-    height: 25vw;
+    width: 40vw;
+    height: 40vw;
     top: 50vh;
     left: 50%;
     display: flex;
@@ -112,6 +112,7 @@ onUnmounted(() => {
 
     .titleText {
       width: 100%;
+      margin-bottom: 50px;
       text-align: center;
       font-size: 48px;
       font-weight: bold;
