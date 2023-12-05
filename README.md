@@ -1,29 +1,25 @@
-# vite-3d
+# DeSK--｜使用 vite + GSAP + ThreeJs 製作 landing page
 
-https://tangtang1b1b.github.io/vite-three-gsap---landing-page
+[DeSK--](https://tangtang1b1b.github.io/vite-three-gsap---landing-page)
 
-## Recommended IDE Setup
+## 開發紀錄
+1. 因為最近想買升降桌，所以打算做一個網頁包含一些技術練習 :
+    * vite + vue3
+    * lenis / gsap
+    * scrolltrigger / gsap
+    * ThreeJs
+2. 確定後就開始用 Blender 建模型上材質，大概渲染出來是這樣 :
+![image](https://i.imgur.com/WbzwlPf.png)
+  
+3. 再來就是畫一個 wireframe 確定畫面大概要長怎樣 :
+  
+![image](https://i.imgur.com/tbYyMBK.jpeg)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+4. 實作完成( RWD 還在思考 TAT)
+    * [DeSK--](https://tangtang1b1b.github.io/vite-three-gsap---landing-page)
+## 效果設計
+1. 主要都以較簡單的白底風格為主，因為想要突顯模型在畫面上的動作
+2. 利用 Timeline 串起許多動畫
+3. 後半部分開始使用translate3d製造畫面立體感
+4. 利用 pin 的功能做出水平滑動的流程圖
+5. 使用 lenis 讓滑動更加絲滑
