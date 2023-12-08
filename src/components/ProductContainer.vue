@@ -62,7 +62,6 @@ onUnmounted(() => {
 
 <template>
   <div class="products" ref="productRef">
-    <!-- <div class="titleMouse" :style="{ top: `${mousePosition.pagey}px`, left: `${mousePosition.pagex}px` }">ABOUT</div> -->
     <div class="title">
       <p ref="contentRef">Why did the lifting desk emerge</p>
     </div>

@@ -27,6 +27,7 @@ onMounted(() => {
       // markers: true,
       scrub: 1.5,
       pin: true,
+      ease: 'Power1.inOut',
     },
   });
   ctx = gsap.context(() => {

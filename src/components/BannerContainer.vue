@@ -19,8 +19,8 @@ onMounted(() => {
         opacity: '0',
         scrollTrigger: {
           trigger: wrapBox,
-          start: 'bottom center',
-          end: `top 20%`,
+          start: 'top center',
+          end: `top center`,
           scrub: 1.3,
           ease: 'none',
           // markers: true,
@@ -46,6 +46,11 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@mixin padMode {
+  @media (max-width: 1025px) {
+    @content
+  }
+}
 .banner {
   text-align: center;
   width: 100%;
@@ -58,7 +63,7 @@ onMounted(() => {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     text-align: left;
     padding: 50px 40px;
 
@@ -67,7 +72,7 @@ onMounted(() => {
       overflow: hidden;
       p{
         span{
-          color: #a1c276;
+          color: #E59A58;
           font-weight: bold;
         }
       }

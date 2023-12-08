@@ -18,6 +18,9 @@ const isReady = ref(false);
 const isRotate = ref(false);
 const scrollY = ref(null);
 
+const isGsap = window.innerWidth > 1024 ? true : false;
+console.log(window.innerWidth);
+
 let ctx;
 
 //------建場景跟渲染器------
@@ -25,10 +28,11 @@ const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 
 //------透視、正式相機------
-const frustumSize = 2;
-const aspect = window.innerWidth / window.innerHeight;
-// const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const camera = new THREE.OrthographicCamera(frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 0.1, 100);
+// const frustumSize = 2;
+// const aspect = window.innerWidth / window.innerHeight;
+// const camera = new THREE.OrthographicCamera(frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 0.1, 100);
+const aspectMode = isGsap ? window.innerWidth / window.innerHeight : window.innerWidth / (window.innerHeight / 2);
+const camera = new THREE.PerspectiveCamera(25, aspectMode, 1, 2000);
 
 //------幫模型打光------
 const directionalLight = new THREE.DirectionalLight(0xffffff, 9);
@@ -47,16 +51,16 @@ loader.load('3Dmodel/desk.gltf', function (gltf) {
 });
 
 camera.position.y = 0.4;
-camera.position.z = 2;
+camera.position.z = isGsap ? 4.5 : 3.5;
 
 const angle = ref(0);
+const offsetX = ref((window.innerWidth / window.innerHeight) / 2);
 const animate = () => {
   requestAnimationFrame(animate);
 
   angle.value += 0.03;
   const offsetY = Math.sin(angle.value) * 0.01;
   desk.position.y = offsetY;
-
   renderer.render(scene, camera);
 }
 
@@ -87,23 +91,26 @@ const mouseMove = (mesh, currentRotation = { x: 0, y: 0 }) => {
 }
 
 const onResize = () => {
-  const aspectResize = window.innerWidth / window.innerHeight;
-  camera.left = frustumSize * aspectResize / - 2;
-  camera.right = frustumSize * aspectResize / 2;
-  camera.top = frustumSize / 2;
-  camera.bottom = - frustumSize / 2;
+  // const aspectResize = window.innerWidth / window.innerHeight;
+  // camera.aspect = aspectResize;
+  // camera.left = frustumSize * aspectResize / - 2;
+  // camera.right = frustumSize * aspectResize / 2;
+  // camera.top = frustumSize / 2;
+  // camera.bottom = - frustumSize / 2;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 const three = onMounted(() => {
+  const isGsap = window.innerWidth > 1024 ? true : false;
+  const heightMode = isGsap ? window.innerHeight : window.innerHeight / 2;
   const angle = Math.PI / 180;
   let delay = 0;
   let delay2 = 0;
   let delay3 = 0;
   let setDuration = 1;
   threeBox.value.appendChild(renderer.domElement);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, heightMode);
   window.addEventListener('resize', onResize, false);
   watchEffect(() => {
     if (isReady.value) {
@@ -135,7 +142,58 @@ const three = onMounted(() => {
         },
       });
       ctx = gsap.context(() => {
-        gsap.set(desk.position, { x: 1, y: 0, z: 0 });
+        if (isGsap) {
+          gsap.set(desk.position, { x: offsetX.value, y: 0, z: 0 });
+          t1.to(desk.position, {
+            x: 0,
+            duration: setDuration,
+          }, delay);
+          t1.to(desk.scale, {
+            x: 1.5,
+            y: 1.5,
+            z: 1.5,
+            duration: setDuration,
+          }, delay)
+          t1.to(desk.rotation, {
+            x: angle * 30,
+            y: angle * 140,
+            duration: setDuration,
+          }, delay);
+
+          delay += setDuration;
+
+          t1.to(desk.position, {
+            x: -1,
+            duration: setDuration,
+          }, delay);
+          t1.to(desk.scale, {
+            x: 1,
+            y: 1,
+            z: 1,
+            duration: setDuration,
+          }, delay)
+          t1.to(desk.rotation, {
+            x: angle * 3,
+            y: angle * 240,
+            duration: setDuration,
+          }, delay);
+
+          t2.to(desk.position, {
+            x: 1,
+            duration: setDuration,
+          }, delay2);
+          t2.to(desk.scale, {
+            x: 1.2,
+            y: 1.2,
+            z: 1.2,
+            duration: setDuration,
+          }, delay2)
+          t2.to(desk.rotation, {
+            x: angle * 0,
+            y: angle * -10,
+            duration: setDuration,
+          }, delay2);
+        }
         gsap.set(props.productRef.value, { opacity: 0 });
         gsap.fromTo('canvas',
           {
@@ -148,42 +206,6 @@ const three = onMounted(() => {
           opacity: 1,
           ease: 'power1.inOut'
         });
-
-        t1.to(desk.position, {
-          x: 0,
-          duration: setDuration,
-        }, delay);
-        t1.to(desk.scale, {
-          x: 1.5,
-          y: 1.5,
-          z: 1.5,
-          duration: setDuration,
-        }, delay)
-        t1.to(desk.rotation, {
-          x: angle * 30,
-          y: angle * 140,
-          duration: setDuration,
-        }, delay);
-
-        delay += setDuration;
-
-        t1.to(desk.position, {
-          x: -1,
-          duration: setDuration,
-        }, delay);
-        t1.to(desk.scale, {
-          x: 1,
-          y: 1,
-          z: 1,
-          duration: setDuration,
-        }, delay)
-        t1.to(desk.rotation, {
-          x: angle * 3,
-          y: angle * 240,
-          duration: setDuration,
-        }, delay);
-
-        delay += setDuration;
 
         gsap.to(props.productRef.value,
           {
@@ -198,22 +220,6 @@ const three = onMounted(() => {
             },
           }
         );
-
-        t2.to(desk.position, {
-          x: 1,
-          duration: setDuration,
-        }, delay2);
-        t2.to(desk.scale, {
-          x: 1.2,
-          y: 1.2,
-          z: 1.2,
-          duration: setDuration,
-        }, delay2)
-        t2.to(desk.rotation, {
-          x: angle * 0,
-          y: angle * -10,
-          duration: setDuration,
-        }, delay2);
 
         t3.to('.container', {
           backgroundColor: '#000',
@@ -246,18 +252,29 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="threeBox" ref="threeBox"></div>
+  <div id="threeBox" ref="threeBox" :style="{ position: isGsap ? 'fixed' : 'absolute' }"></div>
 </template>
 
 <style lang="scss" scoped>
+@mixin padMode {
+  @media (max-width: 1024px) {
+    @content
+  }
+}
+
 #threeBox {
   width: 100%;
   height: 100%;
   position: fixed;
+  left: 0;
   top: 0;
   z-index: 55;
   pointer-events: none;
-  // background-color: #fbfbfb;
+  overflow: hidden;
+
+  @include padMode {
+    height: 50vh;
+  }
 }
 
 .box {
