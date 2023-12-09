@@ -51,12 +51,17 @@ onMounted(() => {
     @content
   }
 }
+
 .banner {
   text-align: center;
   width: 100%;
   max-width: 1440px;
   height: 100vh;
   background-color: #fbfbfb;
+
+  @include padMode {
+    height: calc(50vh - 70px);
+  }
 
   .sloganWrap {
     width: 100%;
@@ -67,11 +72,17 @@ onMounted(() => {
     text-align: left;
     padding: 50px 40px;
 
+    @include padMode {
+      justify-content: center;
+      padding: 0px 20px;
+    }
+
     .wrapBox {
       width: fit-content;
       overflow: hidden;
-      p{
-        span{
+
+      p {
+        span {
           color: #E59A58;
           font-weight: bold;
         }
@@ -85,6 +96,10 @@ onMounted(() => {
         font-weight: bold;
         font-size: 48px;
         transform: translateY(100%);
+
+        @include padMode {
+          font-size: 6vw;
+        }
       }
     }
 
@@ -94,6 +109,9 @@ onMounted(() => {
       p {
         font-size: 18px;
         transform: translateY(100%);
+        @include padMode {
+          font-size: 2.5vw;
+        }
       }
     }
   }

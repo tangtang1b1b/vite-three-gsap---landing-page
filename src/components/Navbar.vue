@@ -44,7 +44,11 @@ watch(navContainerRef, () => {
     @content
   }
 }
-
+@mixin phoneMode {
+  @media (max-width: 768px) {
+    @content
+  }
+}
 .navContainer {
   position: fixed;
   width: 100%;
@@ -72,7 +76,7 @@ watch(navContainerRef, () => {
     color: #000;
     transition: 0.3s;
     transform: rotate(-45deg);
-    margin-right: 10px;
+    margin-right: 20px;
 
     @include padMode {
       display: flex;
@@ -82,6 +86,10 @@ watch(navContainerRef, () => {
 
     span {
       font-size: 36px;
+
+      @include phoneMode {
+        font-size: 18px;
+      }
     }
   }
 
@@ -91,9 +99,14 @@ watch(navContainerRef, () => {
     cursor: pointer;
     width: 50%;
     height: 100%;
-    padding: 0 40px;
+    padding: 0 0 0 40px;
     font-size: 36px;
     font-weight: bold;
+
+    @include phoneMode {
+      font-size: 24px;
+      padding: 0 0 0 20px;
+    }
 
     span {
       font-weight: bold;
@@ -109,7 +122,7 @@ watch(navContainerRef, () => {
     @include padMode {
       position: absolute;
       top: 100%;
-      right: 0;
+      width: 100%;
     }
 
     .tagLists.padMode {
@@ -130,7 +143,6 @@ watch(navContainerRef, () => {
         flex-direction: column;
         align-items: flex-end;
         height: 100%;
-        // overflow: hidden;
       }
 
       .tagList {
@@ -185,13 +197,14 @@ watch(navContainerRef, () => {
         .tagList:nth-child(#{$i}) {
           @include padMode {
             transition: 0.3s #{$i*0.1}s;
+            text-align: center;
           }
         }
 
         .tagList.padMode:nth-child(#{$i}) {
           @include padMode {
             width: calc(#{$i} * 20vw + 10vw);
-            padding: 40px;
+            padding: 40px 0px;
           }
         }
       }

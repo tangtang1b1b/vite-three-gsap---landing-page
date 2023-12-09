@@ -19,7 +19,6 @@ const isRotate = ref(false);
 const scrollY = ref(null);
 
 const isGsap = window.innerWidth > 1024 ? true : false;
-console.log(window.innerWidth);
 
 let ctx;
 
@@ -32,7 +31,7 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 // const aspect = window.innerWidth / window.innerHeight;
 // const camera = new THREE.OrthographicCamera(frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 0.1, 100);
 const aspectMode = isGsap ? window.innerWidth / window.innerHeight : window.innerWidth / (window.innerHeight / 2);
-const camera = new THREE.PerspectiveCamera(25, aspectMode, 1, 2000);
+const camera = new THREE.PerspectiveCamera(25, aspectMode, 1, 1000);
 
 //------幫模型打光------
 const directionalLight = new THREE.DirectionalLight(0xffffff, 9);
@@ -49,9 +48,15 @@ loader.load('3Dmodel/desk.gltf', function (gltf) {
   animate();
   isReady.value = true;
 });
-
+const windowSize = (w) => {
+  if (w > 600 && w < 1200) {
+    return 2.8
+  } else if (w < 600) {
+    return 3.5
+  }
+}
 camera.position.y = 0.4;
-camera.position.z = isGsap ? 4.5 : 3.5;
+camera.position.z = isGsap ? 4.5 : windowSize(window.innerWidth);
 
 const angle = ref(0);
 const offsetX = ref((window.innerWidth / window.innerHeight) / 2);
@@ -252,7 +257,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="threeBox" ref="threeBox" :style="{ position: isGsap ? 'fixed' : 'absolute' }"></div>
+  <div id="threeBox" ref="threeBox" :style="{ position: isGsap ? 'fixed' : 'static' }"></div>
 </template>
 
 <style lang="scss" scoped>
@@ -273,12 +278,8 @@ onUnmounted(() => {
   overflow: hidden;
 
   @include padMode {
-    height: 50vh;
+    padding-top: 70px;
+    height: 50%;
   }
-}
-
-.box {
-  width: 100%;
-  height: 200vh;
 }
 </style>

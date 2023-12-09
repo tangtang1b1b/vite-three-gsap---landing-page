@@ -98,6 +98,7 @@ onUnmounted(() => {
   width: 100%;
   height: 250vh;
   background-color: transparent;
+  overflow: hidden;
 
   .collectTextArea {
     position: absolute;
