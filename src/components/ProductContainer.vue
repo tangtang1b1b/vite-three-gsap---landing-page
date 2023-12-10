@@ -82,6 +82,12 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@mixin padMode {
+  @media (max-width: 1024px) {
+    @content
+  }
+}
+
 .products {
   position: relative;
   width: 100%;
@@ -95,7 +101,7 @@ onUnmounted(() => {
     font-size: 54px;
     font-weight: bold;
     pointer-events: none;
-    text-shadow: 0 0 5px rgba(173, 202, 136, 1),0 0 10px rgba(173, 202, 136, 1),0 0 15px rgba(173, 202, 136, 1),0 0 40px #ff00de,0 0 70px #ff00de;
+    text-shadow: 0 0 5px rgba(173, 202, 136, 1), 0 0 10px rgba(173, 202, 136, 1), 0 0 15px rgba(173, 202, 136, 1), 0 0 40px #ff00de, 0 0 70px #ff00de;
   }
 
   .title {
@@ -111,11 +117,27 @@ onUnmounted(() => {
       color: #fff;
       font-size: 48px;
       font-weight: bold;
+
+      @include padMode {
+        font-size: 36px;
+      }
     }
   }
 
   .title:nth-child(1) {
     left: 50%;
+
+    @include padMode {
+      width: 80%;
+      transform: translate(-50%, 5%);
+    }
+
+    p {
+      @include padMode {
+        display: flex;
+        justify-content: center;
+      }
+    }
   }
 
   .title:nth-child(2) {
@@ -128,23 +150,49 @@ onUnmounted(() => {
     overflow: hidden;
     pointer-events: none;
 
+    @include padMode {
+      display: flex;
+      justify-content: center;
+      width: 80%;
+      left: 50%;
+      transform: translate(-50%, -5%);
+    }
+
     p {
       color: #fff;
       font-size: 16px;
+
+      @include padMode {
+        display: flex;
+        justify-content: center;
+        font-size: 14px;
+      }
     }
   }
 
   .imgWrap {
-    // filter: blur(1px);
     display: flex;
     justify-content: flex-end;
     width: 100%;
     height: 100%;
+    position: absolute;
+    top: 0;
+
+    @include padMode {
+      height: unset;
+      justify-content: center;
+    }
 
     img {
       cursor: pointer;
       clip-path: polygon(0% 0, 100% 0, 100% 100%, 15% 100%, 0 85%, 0 20%);
       height: 95%;
+
+      @include padMode {
+        clip-path: none;
+        height: 100vh;
+      }
     }
   }
-}</style>
+}
+</style>

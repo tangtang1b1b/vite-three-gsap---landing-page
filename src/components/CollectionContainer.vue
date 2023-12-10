@@ -18,6 +18,8 @@ const emits = defineEmits();
 let ctx;
 
 onMounted(() => {
+  const isGsap = window.innerWidth > 1024 ? true : false;
+  console.log(isGsap);
   emits('sendCollectionRef', collectionRef);
   const t1 = gsap.timeline({
     scrollTrigger: {
@@ -31,26 +33,49 @@ onMounted(() => {
     },
   });
   ctx = gsap.context(() => {
-    t1.fromTo('.titleText',
-      {
-        opacity: 0,
-        transform: 'scale(70%)',
-      },
-      {
-        transform: 'scale(200%)',
-        opacity: 1,
-      }, 0
-    )
-    t1.fromTo('.contentText',
-      {
-        opacity: 0,
-        transform: 'scale(70%)',
-      },
-      {
-        transform: 'scale(150%)',
-        opacity: 1,
-      }, 0
-    )
+    if (isGsap) {
+      t1.fromTo('.titleText',
+        {
+          opacity: 0,
+          transform: 'scale(70%)',
+        },
+        {
+          transform: 'scale(200%)',
+          opacity: 1,
+        }, 0
+      )
+      t1.fromTo('.contentText',
+        {
+          opacity: 0,
+          transform: 'scale(70%)',
+        },
+        {
+          transform: 'scale(150%)',
+          opacity: 1,
+        }, 0
+      )
+    } else {
+      t1.fromTo('.titleText',
+        {
+          opacity: 0,
+          transform: 'scale(70%)',
+        },
+        {
+          transform: 'scale(200%)',
+          opacity: 1,
+        }, 0
+      )
+      t1.fromTo('.contentText',
+        {
+          opacity: 0,
+          transform: 'scale(70%)',
+        },
+        {
+          transform: 'scale(100%)',
+          opacity: 1,
+        }, 0
+      )
+    }
     t1.fromTo('.imgBox',
       {
         opacity: 0,
@@ -93,6 +118,12 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@mixin padMode {
+  @media (max-width: 1024px) {
+    @content
+  }
+}
+
 .collection {
   position: relative;
   width: 100%;
@@ -112,6 +143,10 @@ onUnmounted(() => {
     align-items: center;
     transform: translate(-50%, -50%);
 
+    @include padMode {
+      width: 100vw;
+    }
+
     .titleText {
       width: 100%;
       margin-bottom: 50px;
@@ -120,6 +155,10 @@ onUnmounted(() => {
       font-weight: bold;
       color: #fbfbfb;
       opacity: 0;
+
+      @include padMode {
+        font-size: 24px;
+      }
     }
 
     .contentText {
@@ -132,8 +171,16 @@ onUnmounted(() => {
       color: #fbfbfb8b;
       opacity: 0;
 
+      @include padMode {
+        font-size: 14px;
+      }
+
       span {
         font-size: 16px;
+
+        @include padMode {
+          font-size: 12px;
+        }
       }
     }
   }
@@ -147,6 +194,11 @@ onUnmounted(() => {
     transform-style: preserve-3d;
     will-change: transform, opacity;
     transform: translate3d(-50%, -50%, 0) scale(80%) rotateX(0) rotateY(0) rotateZ(-45deg);
+
+    @include padMode {
+      width: 100vw;
+      height: 100vw;
+    }
 
     .imgSet {
       position: absolute;
@@ -196,4 +248,5 @@ onUnmounted(() => {
       transform: translate3d(0, 0, 1000px) perspective(1000px) rotateX(0) rotateY(60deg) rotateZ(0);
     }
   }
-}</style>
+}
+</style>

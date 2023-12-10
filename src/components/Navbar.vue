@@ -44,6 +44,7 @@ watch(navContainerRef, () => {
     @content
   }
 }
+
 @mixin phoneMode {
   @media (max-width: 768px) {
     @content
