@@ -87,7 +87,11 @@ onUnmounted(() => {
     @content
   }
 }
-
+@mixin phoneMode {
+  @media (max-width: 768px) {
+    @content
+  }
+}
 .products {
   position: relative;
   width: 100%;
@@ -128,12 +132,15 @@ onUnmounted(() => {
     left: 50%;
 
     @include padMode {
+      width: 50%;
+    }
+    @include phoneMode {
       width: 80%;
       transform: translate(-50%, 5%);
     }
 
     p {
-      @include padMode {
+      @include phoneMode {
         display: flex;
         justify-content: center;
       }
@@ -150,7 +157,7 @@ onUnmounted(() => {
     overflow: hidden;
     pointer-events: none;
 
-    @include padMode {
+    @include phoneMode {
       display: flex;
       justify-content: center;
       width: 80%;
@@ -162,7 +169,7 @@ onUnmounted(() => {
       color: #fff;
       font-size: 16px;
 
-      @include padMode {
+      @include phoneMode {
         display: flex;
         justify-content: center;
         font-size: 14px;

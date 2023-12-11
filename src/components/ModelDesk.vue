@@ -2,6 +2,8 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useAnimeStore } from '../stores/counter';
+const useAnime = useAnimeStore();
 gsap.registerPlugin(ScrollTrigger);
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
@@ -18,7 +20,7 @@ const isReady = ref(false);
 const isRotate = ref(false);
 const scrollY = ref(null);
 
-const isGsap = window.innerWidth > 1024 ? true : false;
+// const isGsap = window.innerWidth > 1024 ? true : false;
 
 let ctx;
 
@@ -30,7 +32,7 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 // const frustumSize = 2;
 // const aspect = window.innerWidth / window.innerHeight;
 // const camera = new THREE.OrthographicCamera(frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 0.1, 100);
-const aspectMode = isGsap ? window.innerWidth / window.innerHeight : window.innerWidth / (window.innerHeight / 2);
+const aspectMode = useAnime.isGsap ? window.innerWidth / window.innerHeight : window.innerWidth / (window.innerHeight / 2);
 const camera = new THREE.PerspectiveCamera(25, aspectMode, 1, 1000);
 
 //------幫模型打光------
@@ -56,7 +58,7 @@ const windowSize = (w) => {
   }
 }
 camera.position.y = 0.4;
-camera.position.z = isGsap ? 4.5 : windowSize(window.innerWidth);
+camera.position.z = useAnime.isGsap ? 4.5 : windowSize(window.innerWidth);
 
 const angle = ref(0);
 const offsetX = ref((window.innerWidth / window.innerHeight) / 2);
@@ -107,8 +109,8 @@ const onResize = () => {
 }
 
 const three = onMounted(() => {
-  const isGsap = window.innerWidth > 1024 ? true : false;
-  const heightMode = isGsap ? window.innerHeight : window.innerHeight / 2;
+  // const isGsap = window.innerWidth > 1024 ? true : false;
+  const heightMode = useAnime.isGsap ? window.innerHeight : window.innerHeight / 2;
   const angle = Math.PI / 180;
   let delay = 0;
   let delay2 = 0;
@@ -147,7 +149,7 @@ const three = onMounted(() => {
         },
       });
       ctx = gsap.context(() => {
-        if (isGsap) {
+        if (useAnime.isGsap) {
           gsap.set(desk.position, { x: offsetX.value, y: 0, z: 0 });
           t1.to(desk.position, {
             x: 0,
@@ -257,7 +259,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="threeBox" ref="threeBox" :style="{ position: isGsap ? 'fixed' : 'static' }"></div>
+  <div id="threeBox" ref="threeBox" :style="{ position: useAnime.isGsap ? 'fixed' : 'static' }"></div>
 </template>
 
 <style lang="scss" scoped>

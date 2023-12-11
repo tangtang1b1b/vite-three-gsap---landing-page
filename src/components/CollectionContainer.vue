@@ -2,7 +2,11 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useAnimeStore } from '../stores/counter';
+const useAnime = useAnimeStore();
 gsap.registerPlugin(ScrollTrigger);
+
+
 
 const images = ref([
   'photos/1.jpg',
@@ -18,8 +22,7 @@ const emits = defineEmits();
 let ctx;
 
 onMounted(() => {
-  const isGsap = window.innerWidth > 1024 ? true : false;
-  console.log(isGsap);
+  const padMode = window.innerWidth > 768 ? true : false;
   emits('sendCollectionRef', collectionRef);
   const t1 = gsap.timeline({
     scrollTrigger: {
@@ -33,7 +36,28 @@ onMounted(() => {
     },
   });
   ctx = gsap.context(() => {
-    if (isGsap) {
+    if (useAnime.isGsap) {
+      t1.fromTo('.titleText',
+        {
+          opacity: 0,
+          transform: 'scale(70%)',
+        },
+        {
+          transform: 'scale(200%)',
+          opacity: 1,
+        }, 0
+      )
+      t1.fromTo('.contentText',
+        {
+          opacity: 0,
+          transform: 'scale(70%)',
+        },
+        {
+          transform: 'scale(150%)',
+          opacity: 1,
+        }, 0
+      )
+    } else if (padMode) {
       t1.fromTo('.titleText',
         {
           opacity: 0,
@@ -124,6 +148,12 @@ onUnmounted(() => {
   }
 }
 
+@mixin phoneMode {
+  @media (max-width: 768px) {
+    @content
+  }
+}
+
 .collection {
   position: relative;
   width: 100%;
@@ -143,7 +173,7 @@ onUnmounted(() => {
     align-items: center;
     transform: translate(-50%, -50%);
 
-    @include padMode {
+    @include phoneMode {
       width: 100vw;
     }
 
@@ -156,7 +186,7 @@ onUnmounted(() => {
       color: #fbfbfb;
       opacity: 0;
 
-      @include padMode {
+      @include phoneMode {
         font-size: 24px;
       }
     }
@@ -171,14 +201,14 @@ onUnmounted(() => {
       color: #fbfbfb8b;
       opacity: 0;
 
-      @include padMode {
+      @include phoneMode {
         font-size: 14px;
       }
 
       span {
         font-size: 16px;
 
-        @include padMode {
+        @include phoneMode {
           font-size: 12px;
         }
       }
