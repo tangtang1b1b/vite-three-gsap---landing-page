@@ -15,7 +15,7 @@
   
 ![image](https://i.imgur.com/tbYyMBK.jpeg)
 
-4. 實作完成( RWD 還在思考 TAT)
+4. 實作完成
     * [DeSK--](https://tangtang1b1b.github.io/vite-three-gsap---landing-page)
 ## 效果設計
 1. 主要都以較簡單的白底風格為主，因為想要突顯模型在畫面上的動作
@@ -24,3 +24,4 @@
 4. 原本第三屏改成旋轉3d效果(原本的設計沒有什麼3d感...)
 5. 利用 pin 的功能做出水平滑動的流程圖
 6. 使用 lenis 讓滑動更加絲滑
+7. 加入loading頁面等待模型載入後消失
