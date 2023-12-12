@@ -3,10 +3,13 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useAnimeStore } from '../stores/counter';
 const useAnime = useAnimeStore();
 
+const handleTouch = (e) => { 
+  e.preventDefault();
+}
 </script>
 
 <template>
-  <div class="mask" v-if="!useAnime.isReady">
+  <div class="mask" v-if="!useAnime.isReady" @touchstart="handleTouch">
     <p>模型載入中</p>
     <div class="svgWrap">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -73,11 +76,13 @@ const useAnime = useAnimeStore();
     display: flex;
     justify-content: center;
   }
-  .svgWrap{
+
+  .svgWrap {
     display: flex;
     justify-content: center;
     width: 50%;
-    svg{
+
+    svg {
       margin: 0;
     }
   }
