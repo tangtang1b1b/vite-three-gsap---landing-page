@@ -8,6 +8,7 @@ import CollectionContainer from '../components/CollectionContainer.vue';
 import ProcessContainer from '../components/ProcessContainer.vue';
 import Navbar from '../components/Navbar.vue';
 import footerArea from '../components/footerArea.vue';
+import LoadingMask from '../components/LoadingMask.vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
@@ -44,6 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <LoadingMask/>
   <Navbar />
   <ModelDesk :productRef="productContainerRef" :collectionRef="collectionContainerRef" :pinSpaceRef="pinSpaceRef" />
   <div class="titleMouse" ref="titleMouseRef"></div>

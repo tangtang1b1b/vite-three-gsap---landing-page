@@ -16,7 +16,7 @@ const props = defineProps({
 })
 
 const threeBox = ref(null);
-const isReady = ref(false);
+// const isReady = ref(false);
 const isRotate = ref(false);
 const scrollY = ref(null);
 const touchX = ref(null);
@@ -49,7 +49,7 @@ loader.load('3Dmodel/desk.gltf', function (gltf) {
   scene.add(desk);
   mouseMove(desk); // loader 是異步所以直接這邊 call 避免time issue
   animate();
-  isReady.value = true;
+  useAnime.isReady = true;
 });
 const windowSize = (w) => {
   if (w > 600 && w < 1200) {
@@ -138,7 +138,7 @@ const three = onMounted(() => {
   renderer.setSize(window.innerWidth, heightMode);
   // window.addEventListener('resize', onResize, false);
   watchEffect(() => {
-    if (isReady.value) {
+    if (useAnime.isReady) {
       const t1 = gsap.timeline({
         scrollTrigger: {
           trigger: threeBox.value,

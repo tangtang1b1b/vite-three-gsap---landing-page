@@ -13,19 +13,19 @@ const show = ref(false);
 const emits = defineEmits();
 let ctx;
 
-const mousePosition = ref({ pagex: '', pagey: '' });
-const mouseSet = (e) => {
-  mousePosition.value.pagex = e.screenX;
-  mousePosition.value.pagey = e.screenY;
-}
-const mouseControlIn = (e) => {
-  show.value = true;
-  window.addEventListener('mousemove', mouseSet)
-}
-const mouseControlOut = (e) => {
-  show.value = false;
-  window.removeEventListener('mousemove', mouseSet)
-}
+// const mousePosition = ref({ pagex: '', pagey: '' });
+// const mouseSet = (e) => {
+//   mousePosition.value.pagex = e.screenX;
+//   mousePosition.value.pagey = e.screenY;
+// }
+// const mouseControlIn = (e) => {
+//   show.value = true;
+//   window.addEventListener('mousemove', mouseSet)
+// }
+// const mouseControlOut = (e) => {
+//   show.value = false;
+//   window.removeEventListener('mousemove', mouseSet)
+// }
 
 onMounted(() => {
   emits('sendProductRef', productRef);
@@ -74,11 +74,8 @@ onUnmounted(() => {
         obesity, making the height-adjustable desk a valuable addition to the modern workspace.</p>
     </div>
     <div class="imgWrap">
-      <div class="titleMouse"
-        :style="{ transition: 'opacity 0.1s', opacity: show ? 1 : 0, top: `${mousePosition.pagey}px`, left: `${mousePosition.pagex}px`, transform: 'translate(50%,-50%)' }">
-        ABOUT</div>
-      <img src="../assets/images/desk1.jpg" alt="desk" @mousemove="mouseControlIn" @mouseleave="mouseControlOut"
-        ref="deskImg">
+      <div class="titleMouse">ABOUT</div>
+      <img src="../assets/images/desk1.jpg" alt="desk" ref="deskImg">
     </div>
   </div>
 </template>
@@ -105,11 +102,20 @@ onUnmounted(() => {
   .titleMouse {
     position: absolute;
     z-index: 100;
+    left: 0;
     color: #fff;
     font-size: 54px;
     font-weight: bold;
     pointer-events: none;
-    text-shadow: 0 0 5px rgba(173, 202, 136, 1), 0 0 10px rgba(173, 202, 136, 1), 0 0 15px rgba(173, 202, 136, 1), 0 0 40px #ff00de, 0 0 70px #ff00de;
+    mix-blend-mode: exclusion;
+
+    // text-shadow: 0 0 5px rgba(173, 202, 136, 1), 0 0 10px rgba(173, 202, 136, 1), 0 0 15px rgba(173, 202, 136, 1), 0 0 40px #ff00de, 0 0 70px #ff00de;
+    @include padMode {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: exclusion;
+    }
   }
 
   .title {
@@ -206,4 +212,5 @@ onUnmounted(() => {
       }
     }
   }
-}</style>
+}
+</style>
