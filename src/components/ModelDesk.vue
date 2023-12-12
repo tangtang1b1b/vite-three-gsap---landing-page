@@ -151,8 +151,8 @@ const three = onMounted(() => {
       const t2 = gsap.timeline({
         scrollTrigger: {
           trigger: props.pinSpaceRef,
-          start: 'top center',
-          end: `center center`,
+          start: 'top 70%',
+          end: `center 70%`,
           // markers: true,
           scrub: 1.5,
         },
@@ -207,12 +207,6 @@ const three = onMounted(() => {
             x: 1,
             duration: setDuration,
           }, delay2);
-          t2.to(desk.scale, {
-            x: 1.2,
-            y: 1.2,
-            z: 1.2,
-            duration: setDuration,
-          }, delay2)
           t2.to(desk.rotation, {
             x: angle * 0,
             y: angle * -10,
@@ -254,8 +248,6 @@ const three = onMounted(() => {
         }, delay3);
         t3.to(threeBox.value, {
           zIndex: -1,
-          // opacity: 0,
-          // duration: 0.5,
         }, delay3);
       });
     }
