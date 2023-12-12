@@ -19,7 +19,8 @@ const threeBox = ref(null);
 const isReady = ref(false);
 const isRotate = ref(false);
 const scrollY = ref(null);
-
+const touchX = ref(null);
+const touchY = ref(null);
 // const isGsap = window.innerWidth > 1024 ? true : false;
 
 let ctx;
@@ -70,7 +71,6 @@ const animate = () => {
   desk.position.y = offsetY;
   renderer.render(scene, camera);
 }
-
 const mouseMove = (mesh, currentRotation = { x: 0, y: 0 }) => {
   const rotateX = window.innerWidth / 2;
   const rotateY = window.innerHeight / 2;
@@ -78,23 +78,41 @@ const mouseMove = (mesh, currentRotation = { x: 0, y: 0 }) => {
     mesh.rotation.x = currentRotation.x + ((e.clientY - rotateY) * 0.0003);
     mesh.rotation.y = currentRotation.y + ((e.clientX - rotateX) * 0.0003);
   };
-  window.addEventListener('mousemove', handleMouseMove);
-  watch(scrollY, (newValue) => {
-    if (newValue > 0) {
-      if (mesh.rotation.x !== 0 && mesh.rotation.y !== 0 && isRotate.value !== true) {
-        mesh.rotation.x = 0;
-        mesh.rotation.y = 0;
-        isRotate.value = true;
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    touchX.value = e.touches[0].clientX;
+    touchY.value = e.touches[0].clientY;
+  };
+  const handleTouchMove = (e) => {
+    let moveX = e.touches[0].clientX - touchX.value;
+    let moveY = e.touches[0].clientY - touchY.value;
+    touchX.value = e.touches[0].clientX;
+    touchY.value = e.touches[0].clientY;
+    mesh.rotation.y += moveX * 0.003;
+    mesh.rotation.x += moveY * 0.003;
+  }
+  if (useAnime.isGsap) {
+    window.addEventListener('mousemove', handleMouseMove);
+    watch(scrollY, (newValue) => {
+      if (newValue > 0) {
+        if (mesh.rotation.x !== 0 && mesh.rotation.y !== 0 && isRotate.value !== true) {
+          mesh.rotation.x = 0;
+          mesh.rotation.y = 0;
+          isRotate.value = true;
+        }
+        window.removeEventListener('mousemove', handleMouseMove);
+      } else {
+        setTimeout(() => {
+          if (newValue > 0) return
+          isRotate.value = false;
+          window.addEventListener('mousemove', handleMouseMove);
+        }, 33);
       }
-      window.removeEventListener('mousemove', handleMouseMove);
-    } else {
-      setTimeout(() => {
-        if (newValue > 0) return
-        isRotate.value = false;
-        window.addEventListener('mousemove', handleMouseMove);
-      }, 33);
-    }
-  });
+    });
+  } else {
+    threeBox.value.addEventListener('touchstart', handleTouchStart);
+    threeBox.value.addEventListener('touchmove', handleTouchMove);
+  }
 }
 
 const onResize = () => {
@@ -206,13 +224,12 @@ const three = onMounted(() => {
           {
             xPercent: 100,
             opacity: 0,
-            ease: 'power1.inOut'
-          }, {
-          duration: 1,
-          xPercent: 0,
-          opacity: 1,
-          ease: 'power1.inOut'
-        });
+          },
+          {
+            duration: 1,
+            xPercent: 0,
+            opacity: 1,
+          });
 
         gsap.to(props.productRef.value,
           {
@@ -227,7 +244,6 @@ const three = onMounted(() => {
             },
           }
         );
-
         t3.to('.container', {
           backgroundColor: '#000',
           duration: setDuration,
@@ -237,8 +253,9 @@ const three = onMounted(() => {
           duration: setDuration,
         }, delay3);
         t3.to(threeBox.value, {
-          opacity: 0,
-          duration: 0.5,
+          zIndex: -1,
+          // opacity: 0,
+          // duration: 0.5,
         }, delay3);
       });
     }
@@ -282,6 +299,7 @@ onUnmounted(() => {
   @include padMode {
     padding-top: 70px;
     height: 50%;
+    pointer-events: auto;
   }
 }
 </style>

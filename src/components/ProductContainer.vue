@@ -1,6 +1,8 @@
 <script setup >
 import { ref, onMounted, onUnmounted } from 'vue';
 import gsap from 'gsap';
+import { useAnimeStore } from '../stores/counter';
+const useAnime = useAnimeStore();
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,7 +37,7 @@ onMounted(() => {
         start: 'top top',
         end: `+=300% bottom`,
         // markers: true,
-        scrub: 1.5,
+        scrub: true,
         pin: true,
       },
     })
@@ -47,11 +49,11 @@ onMounted(() => {
     tl.to(titles[1], {
       yPercent: 0,
       opacity: 1,
-    }, '>');
+    });
     tl.to(productRef.value, {
-      xPercent: 50,
+      xPercent: useAnime.isGsap ? 50 : 0,
       opacity: 0,
-    }, '>');
+    });
   });
 })
 
@@ -87,11 +89,13 @@ onUnmounted(() => {
     @content
   }
 }
+
 @mixin phoneMode {
   @media (max-width: 768px) {
     @content
   }
 }
+
 .products {
   position: relative;
   width: 100%;
@@ -134,6 +138,7 @@ onUnmounted(() => {
     @include padMode {
       width: 50%;
     }
+
     @include phoneMode {
       width: 80%;
       transform: translate(-50%, 5%);
@@ -201,5 +206,4 @@ onUnmounted(() => {
       }
     }
   }
-}
-</style>
+}</style>
