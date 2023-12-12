@@ -122,8 +122,8 @@ const onResize = () => {
   // camera.right = frustumSize * aspectResize / 2;
   // camera.top = frustumSize / 2;
   // camera.bottom = - frustumSize / 2;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  // camera.updateProjectionMatrix();
+  // renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 const three = onMounted(() => {
@@ -136,7 +136,7 @@ const three = onMounted(() => {
   let setDuration = 1;
   threeBox.value.appendChild(renderer.domElement);
   renderer.setSize(window.innerWidth, heightMode);
-  window.addEventListener('resize', onResize, false);
+  // window.addEventListener('resize', onResize, false);
   watchEffect(() => {
     if (isReady.value) {
       const t1 = gsap.timeline({

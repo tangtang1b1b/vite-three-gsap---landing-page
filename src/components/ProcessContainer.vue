@@ -33,7 +33,7 @@ onMounted(() => {
     });
     ctx = gsap.context(() => {
       t1.to('.lists', {
-        x: padMode ? `-${100 - 100 / 6}%` : `-${100 - 100 / 3}%`,
+        x: useAnime.isGsap ? `-${100 - 100 / 3}%` : `-${100 - 100 / 6}%`,
       })
     });
   }
@@ -152,9 +152,11 @@ onUnmounted(() => {
 
         img {
           width: 100%;
+
           @include padMode {
             border-radius: 30px;
           }
+
           @include phoneMode {
             border-radius: 30px;
           }
