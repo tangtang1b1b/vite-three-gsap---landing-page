@@ -2,6 +2,7 @@
 
 [DeSK--](https://tangtang1b1b.github.io/vite-three-gsap---landing-page)
 
+[DeSK--(AWS版)](http://3.106.129.16/)
 ## 開發紀錄
 1. 因為最近想買升降桌，所以就以這個為主題做一個網頁包含一些技術練習 :
     * vite + vue3
